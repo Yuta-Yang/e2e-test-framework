@@ -9,23 +9,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
 
+      # 下載 repo
+      - uses: actions/checkout@v4
+
+      # 安裝 .NET
       - name: Setup .NET
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
 
-      - name: Restore
+      # 安裝 dependencies
+      - name: Restore dependencies
         run: dotnet restore
 
+      # Build
       - name: Build
         run: dotnet build --no-restore
 
-      - name: Install Playwright
+      # 安裝 Playwright CLI + browser
+      - name: Install Playwright Browsers
         run: |
           dotnet tool install --global Microsoft.Playwright.CLI
-          playwright install
+          playwright install --with-deps
 
+      # 執行測試
       - name: Run Tests
         run: dotnet test --no-build
