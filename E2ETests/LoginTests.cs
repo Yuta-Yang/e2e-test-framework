@@ -15,7 +15,7 @@ public class LoginTests
         var browser = await playwright.Chromium.LaunchAsync(
             new BrowserTypeLaunchOptions
             {
-                Headless = false
+                Headless = true
             });
 
         // 開新頁
